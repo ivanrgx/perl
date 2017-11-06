@@ -1,9 +1,7 @@
 #!/usr/bin/perl
-# multilist.plx
+# dayarray.plx
 use warnings;
 use strict;
-my $mone; my $mtwo;
-($mone, $mtwo) = (1, 3);
-print (("heads ", "shoulders ", "knees ", "toes ")[$mone, $mtwo]);
-print (1..6);
-print "\n";
+my @days;
+@days = qw(Monday Tuesday Wednesday Thursday Friday Saturday Sunday);
+print @days, "\n";
