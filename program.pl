@@ -2,10 +2,14 @@
 # badprefix.plx
 use warnings;
 use strict;
-my @array = (1, 3, 5, 7, 9);
-my $scal;
-$scal = (@array)[-1];
-print $#array;
-print ("\n",scalar @array);
-#new comment!!
-#new new comment!
+
+my %dir=(
+ivan => "27337019",
+papa => 25756332);
+
+
+for (keys %dir){
+print "$_ =>", $dir{$_},"\n"; 
+
+}
+
