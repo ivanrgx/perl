@@ -12,4 +12,4 @@ for (keys %dir){
 print "$_ =>", $dir{$_},"\n"; 
 
 }
-
+print length "hola";
