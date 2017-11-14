@@ -1,15 +1,10 @@
 #!/usr/bin/perl
-# badprefix.plx
+# sdrawkcab1.plx
 use warnings;
 use strict;
-
-my %dir=(
-ivan => "27337019",
-papa => 25756332);
-
-
-for (keys %dir){
-print "$_ =>", $dir{$_},"\n"; 
-
+while (<STDIN>) {
+chomp;
+die "!enod llA\n" unless $_;
+my $sdrawkcab = reverse $_;
+print "$sdrawkcab\n";
 }
-print length "hola";
