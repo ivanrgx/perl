@@ -1,10 +1,12 @@
 #!/usr/bin/perl
-# sdrawkcab1.plx
-use warnings;
+# next.plx
 use strict;
-while (<STDIN>) {
-chomp;
-die "!enod llA\n" unless $_;
-my $sdrawkcab = reverse $_;
-print "$sdrawkcab\n";
+use warnings;
+my @array = (8, 3, 0, 2, 12, 0);
+for my $x(@array) {
+if ($x == 0) {
+print "Skipping zero element.\n";
+next;
+}
+print "48 over $x is ", 48/$x, "\n";
 }
