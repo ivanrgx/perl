@@ -3,5 +3,9 @@
 use warnings;
 use strict;
 
-open INPUT, ">test.txt" or die "Could not open file test.txt";
-print INPUT "HOLA MUNDO";
+my @arr = (1,2,3);
+
+my $ref_arr = \@arr;
+
+
+print(ref($ref_arr));
