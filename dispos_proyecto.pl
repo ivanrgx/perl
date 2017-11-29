@@ -14,7 +14,7 @@ my $bin_data_in;
 print ("Ingresar dato de entrada\n");
 $bin_data_in = <STDIN>;
 chomp($bin_data_in);
-print("\n\n");
+
 
 #Se checa que el dato sea valido
 
@@ -57,7 +57,89 @@ foreach my $char (@bin_data_in){
 # Imprime salida que se guardaria en el disco magnético
 
 print "\nDato entrada: $bin_data_in\n";
-foreach my $el (@salida){
-		print "$el";
+
+print "Codificacion NRZI:\n";
+print_arr(@salida);
+
+
+#Metodo de codificacion: FM
+# Data	# Encoded
+# 0	  T N
+# 1	  T T
+
+$tmp = "+";
+@salida=();
+foreach my $char (@bin_data_in){
+	if ($char eq "1" and $tmp eq "+"){
+		$sentido = "-+";
+	}
+	elsif($char eq "1" and $tmp eq "-"){
+		$sentido = "+-";
+	}
+	elsif($char eq "0" and $tmp eq "+"){
+		$sentido = "--";
+	}
+	elsif($char eq "0" and $tmp eq "-"){
+		$sentido = "++";
+	}
+
+	# Se guarda el sentido en el arreglo @salida
+	push (@salida, $sentido);
+
+	# Para determinar los cambios de polaridad (T o NT) se guarda el sentido de esta iteracion en $tmp
+	$tmp = substr($sentido,1,1);
 }
-print"\n";
+
+
+print "\nCodificacion FM:\n";
+print_arr(@salida);
+
+
+
+
+#Metodo de codificacion: MFM
+# Data			# Encoded
+# 1			  N T
+# 0 precedido por 0	  T N
+# 0 precedido por 1	  N N
+
+$tmp = "+";
+@salida=();
+foreach my $char (@bin_data_in){
+	if ($char eq "1" and $tmp eq "+"){
+		$sentido = "-+";
+	}
+	elsif($char eq "1" and $tmp eq "-"){
+		$sentido = "+-";
+	}
+	elsif($char eq "0" and $tmp eq "+"){
+		$sentido = "--";
+	}
+	elsif($char eq "0" and $tmp eq "-"){
+		$sentido = "++";
+	}
+
+	# Se guarda el sentido en el arreglo @salida
+	push (@salida, $sentido);
+
+	# Para determinar los cambios de polaridad (T o NT) se guarda el sentido de esta iteracion en $tmp
+	$tmp = substr($sentido,1,1);
+}
+
+
+
+
+
+
+
+
+
+
+
+	
+sub print_arr{
+	foreach my $el (@_){
+		print "$el";
+	}
+	print"\n";
+}
