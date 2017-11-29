@@ -97,27 +97,36 @@ print_arr(@salida);
 
 
 
-#Metodo de codificacion: MFM
+#Metodo de codificacion: MFM		Suponemos que se encuentra un 0 en el disco antes de ingresar información
 # Data			# Encoded
 # 1			  N T
 # 0 precedido por 0	  T N
 # 0 precedido por 1	  N N
 
 $tmp = "+";
+my $bit_pre = "0";
 @salida=();
 foreach my $char (@bin_data_in){
 	if ($char eq "1" and $tmp eq "+"){
-		$sentido = "-+";
-	}
-	elsif($char eq "1" and $tmp eq "-"){
 		$sentido = "+-";
 	}
-	elsif($char eq "0" and $tmp eq "+"){
+	elsif($char eq "1" and $tmp eq "-"){
+		$sentido = "-+";
+	}
+	elsif($char eq "0" and $bit_pre eq "0"  and $tmp eq "+"){
 		$sentido = "--";
 	}
-	elsif($char eq "0" and $tmp eq "-"){
+	elsif($char eq "0" and $bit_pre eq "0"  and $tmp eq "-"){
 		$sentido = "++";
 	}
+	elsif($char eq "0" and $bit_pre eq "1"  and $tmp eq "-"){
+		$sentido = "--";
+	}
+	elsif($char eq "0" and $bit_pre eq "1"  and $tmp eq "+"){
+		$sentido = "++";
+	}
+
+	$bit_pre = $char;
 
 	# Se guarda el sentido en el arreglo @salida
 	push (@salida, $sentido);
@@ -127,9 +136,49 @@ foreach my $char (@bin_data_in){
 }
 
 
+print "\nCodificacion MFM:\n";
+print_arr(@salida);
 
 
 
+
+#Metodo de codificacion: RLL		
+# Data			# Encoded
+# 1			  N T
+# 0 precedido por 0	  T N
+# 0 precedido por 1	  N N
+
+$tmp = "+";
+my $bit_pre = "0";
+@salida=();
+foreach my $char (@bin_data_in){
+	if ($char eq "1" and $tmp eq "+"){
+		$sentido = "+-";
+	}
+	elsif($char eq "1" and $tmp eq "-"){
+		$sentido = "-+";
+	}
+	elsif($char eq "0" and $bit_pre eq "0"  and $tmp eq "+"){
+		$sentido = "--";
+	}
+	elsif($char eq "0" and $bit_pre eq "0"  and $tmp eq "-"){
+		$sentido = "++";
+	}
+	elsif($char eq "0" and $bit_pre eq "1"  and $tmp eq "-"){
+		$sentido = "--";
+	}
+	elsif($char eq "0" and $bit_pre eq "1"  and $tmp eq "+"){
+		$sentido = "++";
+	}
+
+	$bit_pre = $char;
+
+	# Se guarda el sentido en el arreglo @salida
+	push (@salida, $sentido);
+
+	# Para determinar los cambios de polaridad (T o NT) se guarda el sentido de esta iteracion en $tmp
+	$tmp = substr($sentido,1,1);
+}
 
 
 
