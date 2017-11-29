@@ -3,9 +3,8 @@
 use warnings;
 use strict;
 
-my @arr = (1,2,3);
+sub p(){
+print "Hola!";
+}
 
-my $ref_arr = \@arr;
-
-
-print(ref($ref_arr));
+foreach my $el(0..4){p()};
