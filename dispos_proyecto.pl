@@ -144,42 +144,140 @@ print_arr(@salida);
 
 #Metodo de codificacion: RLL		
 # Data			# Encoded
-# 1			  N T
-# 0 precedido por 0	  T N
-# 0 precedido por 1	  N N
+# 1 0			  N T N N
+# 1 1			  T N N N
+# 0 0 0			  N N N T N N
+# 0 1 0			  T N N T N N
+# 0 1 1			  N N T N N N
+# 0 0 1 0		  N N T N N T N N
+# 0 0 1 1		  N N N N T N N N
+
 
 $tmp = "+";
-my $bit_pre = "0";
+$pattern;
 @salida=();
-foreach my $char (@bin_data_in){
-	if ($char eq "1" and $tmp eq "+"){
-		$sentido = "+-";
+while(){
+	$pattern = substr($bin_data_in,0,2);
+	if($pattern eq ""){last;} # Fin de cadena
+	
+	if($pattern eq "10" and $tmp eq "+"){
+		$sentido = "+---";
+		$bin_data_in = substr($bin_data_in,2,length($bin_data_in));
+		push (@salida, $sentido);
+		$tmp = substr($sentido,-1,1);
+		next;
 	}
-	elsif($char eq "1" and $tmp eq "-"){
-		$sentido = "-+";
-	}
-	elsif($char eq "0" and $bit_pre eq "0"  and $tmp eq "+"){
-		$sentido = "--";
-	}
-	elsif($char eq "0" and $bit_pre eq "0"  and $tmp eq "-"){
-		$sentido = "++";
-	}
-	elsif($char eq "0" and $bit_pre eq "1"  and $tmp eq "-"){
-		$sentido = "--";
-	}
-	elsif($char eq "0" and $bit_pre eq "1"  and $tmp eq "+"){
-		$sentido = "++";
+	elif($pattern eq "10" and $tmp eq "-"){
+		$sentido = "-+++";
+		$bin_data_in = substr($bin_data_in,2,length($bin_data_in));
+		push (@salida, $sentido);
+		$tmp = substr($sentido,-1,1);
+		next;
 	}
 
-	$bit_pre = $char;
+	if($pattern eq "11" and $tmp eq "+"){
+		$sentido = "----";
+		$bin_data_in = substr($bin_data_in,2,length($bin_data_in));
+		push (@salida, $sentido);
+		$tmp = substr($sentido,-1,1);
+		next;
+	}
+	elif($pattern eq "11" and $tmp eq "-"){
+		$sentido = "++++";
+		$bin_data_in = substr($bin_data_in,2,length($bin_data_in));
+		push (@salida, $sentido);
+		$tmp = substr($sentido,-1,1);
+		next;
+	}
 
-	# Se guarda el sentido en el arreglo @salida
-	push (@salida, $sentido);
 
-	# Para determinar los cambios de polaridad (T o NT) se guarda el sentido de esta iteracion en $tmp
-	$tmp = substr($sentido,1,1);
+	$pattern = substr($bin_data_in,0,3);
+	if($pattern eq ""){last;} # Fin de cadena
+
+	if($pattern eq "000" and $tmp eq "+"){
+		$sentido = "+++---";
+		$bin_data_in = substr($bin_data_in,3,length($bin_data_in));
+		push (@salida, $sentido);
+		$tmp = substr($sentido,-1,1);
+		next;
+	}
+
+	if($pattern eq "000" and $tmp eq "-"){
+		$sentido = "---+++";
+		$bin_data_in = substr($bin_data_in,3,length($bin_data_in));
+		push (@salida, $sentido);
+		$tmp = substr($sentido,-1,1);
+		next;
+	}
+
+	if($pattern eq "010" and $tmp eq "+"){
+		$sentido = "---+++";
+		$bin_data_in = substr($bin_data_in,3,length($bin_data_in));
+		push (@salida, $sentido);
+		$tmp = substr($sentido,-1,1);
+		next;
+	}
+
+	if($pattern eq "010" and $tmp eq "-"){
+		$sentido = "+++---";
+		$bin_data_in = substr($bin_data_in,3,length($bin_data_in));
+		push (@salida, $sentido);
+		$tmp = substr($sentido,-1,1);
+		next;
+	}
+
+	if($pattern eq "011" and $tmp eq "+"){
+		$sentido = "++----";
+		$bin_data_in = substr($bin_data_in,3,length($bin_data_in));
+		push (@salida, $sentido);
+		$tmp = substr($sentido,-1,1);
+		next;
+	}
+
+	if($pattern eq "011" and $tmp eq "-"){
+		$sentido = "--++++";
+		$bin_data_in = substr($bin_data_in,3,length($bin_data_in));
+		push (@salida, $sentido);
+		$tmp = substr($sentido,-1,1);
+		next;
+	}
+
+	$pattern = substr($bin_data_in,0,4);
+	if($pattern eq ""){last;} # Fin de cadena
+
+	if($pattern eq "0010" and $tmp eq "+"){
+		$sentido = "++---+++";
+		$bin_data_in = substr($bin_data_in,3,length($bin_data_in));
+		push (@salida, $sentido);
+		$tmp = substr($sentido,-1,1);
+		next;
+	}
+
+	if($pattern eq "0010" and $tmp eq "-"){
+		$sentido = "--+++---";
+		$bin_data_in = substr($bin_data_in,3,length($bin_data_in));
+		push (@salida, $sentido);
+		$tmp = substr($sentido,-1,1);
+		next;
+	}
+	if($pattern eq "0011" and $tmp eq "+"){
+		$sentido = "++++-----";
+		$bin_data_in = substr($bin_data_in,3,length($bin_data_in));
+		push (@salida, $sentido);
+		$tmp = substr($sentido,-1,1);
+		next;
+	}
+
+	if($pattern eq "0011" and $tmp eq "-"){
+		$sentido = "----++++";
+		$bin_data_in = substr($bin_data_in,3,length($bin_data_in));
+		push (@salida, $sentido);
+		$tmp = substr($sentido,-1,1);
+		next;
+	}
+
+
 }
-
 
 
 
