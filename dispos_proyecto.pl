@@ -18,7 +18,7 @@ chomp($bin_data_in);
 
 #Se checa que el dato sea valido
 
-unless($bin_data_in=~ /^[01]+$/){ 
+unless($bin_data_in=~ /^[01]+$/){
 	die "Dato de entrada invalido, unicamente ingresar 0's y 1's\n\n";
 }
 
@@ -35,7 +35,7 @@ foreach my $char (@bin_data_in){
         # que se guardará en el disco magnético;
 	if($char eq "1" and $tmp eq "+"){
 		$sentido = "-";
-	} 
+	}
 	elsif($char eq "1" and $tmp eq "-"){
 		$sentido = "+";
 	}
@@ -45,7 +45,7 @@ foreach my $char (@bin_data_in){
 	elsif($char eq "0" and $tmp eq "-"){
 		$sentido = "-";
 	}
-	
+
 	# Se guarda el sentido en el arreglo @salida
 	push (@salida, $sentido);
 
@@ -142,10 +142,10 @@ print_arr(@salida);
 
 
 
-#Metodo de codificacion: RLL		
+#Metodo de codificacion: RLL
 # Data			# Encoded
-# 1 0			  N T N N
-# 1 1			  T N N N
+# 1 0			    N T N N
+# 1 1			    T N N N
 # 0 0 0			  N N N T N N
 # 0 1 0			  T N N T N N
 # 0 1 1			  N N T N N N
@@ -154,12 +154,12 @@ print_arr(@salida);
 
 
 $tmp = "+";
-$pattern;
+my $pattern;
 @salida=();
 while(){
 	$pattern = substr($bin_data_in,0,2);
 	if($pattern eq ""){last;} # Fin de cadena
-	
+
 	if($pattern eq "10" and $tmp eq "+"){
 		$sentido = "+---";
 		$bin_data_in = substr($bin_data_in,2,length($bin_data_in));
@@ -167,13 +167,15 @@ while(){
 		$tmp = substr($sentido,-1,1);
 		next;
 	}
-	elif($pattern eq "10" and $tmp eq "-"){
+	elsif($pattern eq "10" and $tmp eq "-"){
 		$sentido = "-+++";
 		$bin_data_in = substr($bin_data_in,2,length($bin_data_in));
 		push (@salida, $sentido);
 		$tmp = substr($sentido,-1,1);
 		next;
 	}
+
+
 
 	if($pattern eq "11" and $tmp eq "+"){
 		$sentido = "----";
@@ -182,7 +184,7 @@ while(){
 		$tmp = substr($sentido,-1,1);
 		next;
 	}
-	elif($pattern eq "11" and $tmp eq "-"){
+	elsif($pattern eq "11" and $tmp eq "-"){
 		$sentido = "++++";
 		$bin_data_in = substr($bin_data_in,2,length($bin_data_in));
 		push (@salida, $sentido);
@@ -247,7 +249,7 @@ while(){
 
 	if($pattern eq "0010" and $tmp eq "+"){
 		$sentido = "++---+++";
-		$bin_data_in = substr($bin_data_in,3,length($bin_data_in));
+		$bin_data_in = substr($bin_data_in,4,length($bin_data_in));
 		push (@salida, $sentido);
 		$tmp = substr($sentido,-1,1);
 		next;
@@ -255,14 +257,14 @@ while(){
 
 	if($pattern eq "0010" and $tmp eq "-"){
 		$sentido = "--+++---";
-		$bin_data_in = substr($bin_data_in,3,length($bin_data_in));
+		$bin_data_in = substr($bin_data_in,4,length($bin_data_in));
 		push (@salida, $sentido);
 		$tmp = substr($sentido,-1,1);
 		next;
 	}
 	if($pattern eq "0011" and $tmp eq "+"){
 		$sentido = "++++-----";
-		$bin_data_in = substr($bin_data_in,3,length($bin_data_in));
+		$bin_data_in = substr($bin_data_in,4,length($bin_data_in));
 		push (@salida, $sentido);
 		$tmp = substr($sentido,-1,1);
 		next;
@@ -270,7 +272,7 @@ while(){
 
 	if($pattern eq "0011" and $tmp eq "-"){
 		$sentido = "----++++";
-		$bin_data_in = substr($bin_data_in,3,length($bin_data_in));
+		$bin_data_in = substr($bin_data_in,4,length($bin_data_in));
 		push (@salida, $sentido);
 		$tmp = substr($sentido,-1,1);
 		next;
@@ -280,10 +282,11 @@ while(){
 }
 
 
+print "\nCodificacion RLL:\n";
+print_arr(@salida);
 
 
 
-	
 sub print_arr{
 	foreach my $el (@_){
 		print "$el";
