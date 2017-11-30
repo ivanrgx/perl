@@ -32,7 +32,7 @@ my @bin_data_in = split(//,$bin_data_in);
 
 foreach my $char (@bin_data_in){
 	# Dependiendo de el bit de entrada, es que se determinará el sentido del campo magnético
-        # que se guardará en el disco magnético;
+  # que se guardará en el disco magnético;
 	if($char eq "1" and $tmp eq "+"){
 		$sentido = "-";
 	}
@@ -99,7 +99,7 @@ print_arr(@salida);
 
 #Metodo de codificacion: MFM		Suponemos que se encuentra un 0 en el disco antes de ingresar información
 # Data			# Encoded
-# 1			  N T
+# 1			              N T
 # 0 precedido por 0	  T N
 # 0 precedido por 1	  N N
 
@@ -157,6 +157,8 @@ $tmp = "+";
 my $pattern;
 @salida=();
 while(){
+	if($bin_data_in eq "00" or $bin_data_in eq "1" or $bin_data_in eq "01")	{	$bin_data_in.="0";}
+	if($bin_data_in eq "0")										    	{ $bin_data_in.="00";}
 	$pattern = substr($bin_data_in,0,2);
 	if($pattern eq ""){last;} # Fin de cadena
 
@@ -167,7 +169,8 @@ while(){
 		$tmp = substr($sentido,-1,1);
 		next;
 	}
-	elsif($pattern eq "10" and $tmp eq "-"){
+
+	if($pattern eq "10" and $tmp eq "-"){
 		$sentido = "-+++";
 		$bin_data_in = substr($bin_data_in,2,length($bin_data_in));
 		push (@salida, $sentido);
@@ -184,7 +187,7 @@ while(){
 		$tmp = substr($sentido,-1,1);
 		next;
 	}
-	elsif($pattern eq "11" and $tmp eq "-"){
+	if($pattern eq "11" and $tmp eq "-"){
 		$sentido = "++++";
 		$bin_data_in = substr($bin_data_in,2,length($bin_data_in));
 		push (@salida, $sentido);
@@ -263,7 +266,7 @@ while(){
 		next;
 	}
 	if($pattern eq "0011" and $tmp eq "+"){
-		$sentido = "++++-----";
+		$sentido = "++++----";
 		$bin_data_in = substr($bin_data_in,4,length($bin_data_in));
 		push (@salida, $sentido);
 		$tmp = substr($sentido,-1,1);
@@ -279,6 +282,7 @@ while(){
 	}
 
 
+
 }
 
 
@@ -289,7 +293,7 @@ print_arr(@salida);
 
 sub print_arr{
 	foreach my $el (@_){
-		print "$el";
+		print "$el ";
 	}
 	print"\n";
 }
