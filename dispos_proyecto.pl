@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 use strict;
 
-# Proyecto final de dispositivos
+# Proyecto final de dispositivosO
 # Programa que regresa el sentido magn�tico teorico (+ o -) que debera guardarse en un disco magnetico
 # de una entrada especifica en ascii
 # El sentido magnatico dependera de la cadena de entrada y metodo de codificacion
